@@ -8,14 +8,36 @@ class CleanRow < Struct.new :row
     row[:accused_officer_lname].split("' '")
   end
 
+  def involved_fnames
+    row[:involved_officer_fname].split("' '")
+  end
+
+  def involved_lnames
+    row[:involved_officer_lname].split("' '")
+  end
+
+  def involved_bothnames
+    involved_fnames.zip(involved_lnames).map do |pair_of_names|
+      pair_of_names.join(' ')
+    end.to_s
+  end
+
   def accused_bothnames
     accused_fnames.zip(accused_lnames).map do |pair_of_names|
       pair_of_names.join(' ')
     end.to_s
   end
 
-  def cleaned_names
-    accused_bothnames.gsub("None", "")
+  def cleaned_accused_names
+    clean_names_string(accused_bothnames)
+  end
+
+  def cleaned_involved_names
+    clean_names_string(involved_bothnames)
+  end
+
+  def clean_names_string(names_string)
+    names_string.gsub("None", "")
                      .gsub("[", "")
                      .gsub("]", "")
                      .gsub("'", "")
@@ -29,7 +51,7 @@ class CleanRow < Struct.new :row
 
   def incident_links
     public_urls.map do |url|
-      "<a href=#{url} target='_blank'>#{url.split('.')[1]}</a>"
+      "<a href=#{url} target='_blank'>doc</a>"
     end.join(', ')
   end
 

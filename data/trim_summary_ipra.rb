@@ -21,6 +21,7 @@ CSV.open("trimmed_summary_ipra.csv", "wb") do |trimmed_csv|
     "Complaint number:",
     "Complaint date:",
     "Accused officer names:",
+    "Involved officer names:",
     "Documents:",
     "Docs Withheld Notes:",
   ]
@@ -33,7 +34,8 @@ CSV.open("trimmed_summary_ipra.csv", "wb") do |trimmed_csv|
       trimmed_csv << [
         row.complaint_number,
         row.complaint_date,
-        row.cleaned_names,
+        row.cleaned_accused_names,
+        row.cleaned_involved_names,
         row.incident_links,
         row.docs_withheld
       ]
