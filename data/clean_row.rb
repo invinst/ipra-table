@@ -1,28 +1,22 @@
 class CleanRow < Struct.new :row
 
   def accused_fnames
-    row[:accused_officer_fname].split("' '")
+    row[:accused_officer_fname].gsub("\n", "").split("' '")
   end
 
   def accused_lnames
-    row[:accused_officer_lname].split("' '")
-  end
-
-  def involved_fnames
-    row[:involved_officer_fname].split("' '")
-  end
-
-  def involved_lnames
-    row[:involved_officer_lname].split("' '")
-  end
-
-  def involved_bothnames
-    involved_fnames.zip(involved_lnames).map do |pair_of_names|
-      pair_of_names.join(' ')
-    end.to_s
+    row[:accused_officer_lname].gsub("\n", "").split("' '")
   end
 
   def accused_bothnames
+
+    if accused_fnames.size != accused_lnames.size
+      p '!!!!!!'
+
+      p accused_fnames
+      p accused_lnames
+    end
+
     accused_fnames.zip(accused_lnames).map do |pair_of_names|
       pair_of_names.join(' ')
     end.to_s
@@ -30,10 +24,6 @@ class CleanRow < Struct.new :row
 
   def cleaned_accused_names
     clean_names_string(accused_bothnames)
-  end
-
-  def cleaned_involved_names
-    clean_names_string(involved_bothnames)
   end
 
   def clean_names_string(names_string)

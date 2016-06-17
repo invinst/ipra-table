@@ -21,24 +21,29 @@ CSV.open("trimmed_summary_ipra.csv", "wb") do |trimmed_csv|
     "Complaint number:",
     "Complaint date:",
     "Accused officer names:",
-    "Involved officer names:",
     "Documents:",
     "Docs Withheld Notes:",
   ]
 
   original_csv.each do |uncleaned_row|
-    if uncleaned_row[:accused_officer_fname] != "None"
 
-      row = CleanRow.new uncleaned_row
+    row = CleanRow.new uncleaned_row
 
-      trimmed_csv << [
-        row.complaint_number,
-        row.complaint_date,
-        row.cleaned_accused_names,
-        row.cleaned_involved_names,
-        row.incident_links,
-        row.docs_withheld
-      ]
+    names_explanation = case row.complaint_number
+    when "1053667.0"
+      "ANTHONY ROSEN, MICHAEL GONZALEZ JR, MANUEL MENDEZ JR, DANIEL LOPEZ, \
+      MICHAEL CURRY, TERRENCE PRATSCHER, VIOLET REY"
+    when "1078329.0"
+      "SEAN TULLY (see AMBIGUOUS for more information)"
     end
+
+    trimmed_csv << [
+      row.complaint_number,
+      row.complaint_date,
+      names_explanation || row.cleaned_accused_names,
+      row.incident_links,
+      row.docs_withheld
+    ]
   end
+
 end
