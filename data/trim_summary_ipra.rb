@@ -34,7 +34,11 @@ CSV.open("trimmed_summary_ipra.csv", "wb") do |trimmed_csv|
       "ANTHONY ROSEN, MICHAEL GONZALEZ JR, MANUEL MENDEZ JR, DANIEL LOPEZ, \
       MICHAEL CURRY, TERRENCE PRATSCHER, VIOLET REY"
     when "1078329.0"
-      "SEAN TULLY (see AMBIGUOUS for more information)"
+      "SEAN TULLY (see <strong>
+              <a href='https://github.com/invinst/ipra-table/blob/master/data/AMBIGUOUS.md'>
+                data/AMBIGUOUS.md
+              </a>
+            </strong> for more information.)"
     end
 
     trimmed_csv << [
